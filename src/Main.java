@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -40,6 +41,13 @@ public class Main {
             System.out.printf("%s | %s\n", strings[0], strings[1]);
         }
 
+        Scanner sc = new Scanner (System.in);
+        System.out.println("Please enter a name");
+        userName = sc.nextLine();
+        System.out.println("Enter phone number");
+        userNumber = sc.nextLine();
+        System.out.println("User added successfully");
 
+        Files.write(dataFile, ("\n" + userName.trim() +"|"+ userNumber.trim()).getBytes(), StandardOpenOption.APPEND);
     }
 }
