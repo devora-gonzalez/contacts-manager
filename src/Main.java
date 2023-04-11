@@ -35,8 +35,6 @@ public class Main {
         List<String> currentFileInfo;
 
 
-
-
         boolean userContinue;
 
         do {
@@ -48,23 +46,33 @@ public class Main {
             System.out.println("4. Delete and existing contact by name");
             System.out.println("5. Exit");
             System.out.println();
+
             System.out.print("Enter an option: ");
             int userChoice = sc.nextInt();
             sc.nextLine(); // clear buffer
 
 
             if (userChoice == 1) {
+
                 System.out.println("Here's all the contacts in our file:");
-                System.out.printf("%-15s | %-8s | %n", "Name", "Phone Number");
+                System.out.printf("%-25s | %-8s | %n", "Name", "Phone Number");
                 System.out.println("------------------------------");
 
                 for (String e : currentFileInfo) {
                     String[] strings = e.split("\\|");
-                    String fmt = "%-15s | %-12s |%n";
-                    System.out.printf(fmt, strings[0], strings[1]);
+                    String fmt = "%-20s | %-12s |%n";
+                    String formatedNum = strings[1];
+                    if (strings[1].length() >= 10) {
+                        formatedNum = strings[1].replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1)-$2-$3");
+                    } else {
+                        formatedNum = strings[1].replaceFirst("(\\d{3})(\\d+)", "$1-$2");
+                    }
+
+                    System.out.printf(fmt, strings[0], formatedNum);
                 }
             } else if (userChoice == 2) {
-                System.out.print("Please enter a name: ");
+
+                System.out.print("Enter first and last name: ");
                 userName = sc.nextLine();
 
                 System.out.print("Enter phone number: ");
@@ -74,23 +82,33 @@ public class Main {
 
                 System.out.println("Contact successfully added!!");
 
-
             } else if (userChoice == 3) {
+
                 System.out.print("Enter name to search: ");
 
                 String userSearch = sc.nextLine();
 
                 if (currentFileInfo.toString().toUpperCase().contains(userSearch.toUpperCase())) {
-                    for (String e : currentFileInfo) {
-                        String[] strings = e.split("\\|");
-                        if (strings[0].equalsIgnoreCase(userSearch)) {
-                            System.out.printf("%s | %s\n", strings[0], strings[1]);
+                    for (int i = 0; i < currentFileInfo.size(); i++) {
+                        String currentIndex = currentFileInfo.get(i);
+                        if (currentIndex.toUpperCase().contains(userSearch.toUpperCase())) {
+                            String[] strings = currentIndex.split("\\|");
+                            String fmt = "%-10s | %-12s |%n";
+                            String formatedNum = strings[1];
+                            if (strings[1].length() >= 10) {
+                                formatedNum = strings[1].replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1)-$2-$3");
+                            } else {
+                                formatedNum = strings[1].replaceFirst("(\\d{3})(\\d+)", "$1-$2");
+                            }
+                            System.out.printf(fmt, strings[0], formatedNum);
                         }
                     }
                 } else {
                     System.out.println("Contact does not exist.");
                 }
+
             } else if (userChoice == 4) {
+
                 System.out.println("Enter a name to delete contact information: ");
                 String userDelete = sc.nextLine();
 
@@ -106,13 +124,14 @@ public class Main {
                 } else {
                     System.out.println("Contact does not exist.");
                 }
+
             } else if (userChoice == 5) {
                 System.out.println("Exiting");
                 break;
+
             } else {
                 System.out.println("not valid option");
             }
-
             System.out.println("Would you like to return to menu? [Y/N]");
             userContinue = sc.next().equalsIgnoreCase("y");
         } while (userContinue);
