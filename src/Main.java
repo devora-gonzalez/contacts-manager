@@ -9,6 +9,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException {
 
+        Scanner sc = new Scanner(System.in);
+
         String directory = "src/data";
         String filename = "contacts.txt";
 
@@ -30,50 +32,70 @@ public class Main {
         String userName;
         String userNumber;
 
-//        Files.write(dataFile, List.of(userName + "|" + userNumber), StandardOpenOption.APPEND);
+        List<String> currentFileInfo = Files.readAllLines(dataFile);
 
-        System.out.println("Here's all the information in our file");
+        boolean userContinue;
 
-        List<String> currentFileInfo =  Files.readAllLines(dataFile);
+        do {
 
-        for (String e : currentFileInfo){
-          String[] strings = e.split("\\|");
-            System.out.printf("%s | %s\n", strings[0], strings[1]);
-        }
-
-        Scanner sc = new Scanner (System.in);
-
-        // add - finished
-        System.out.print("Please enter a name: ");
-        userName = sc.nextLine();
-
-        System.out.print("Enter phone number: ");
-        userNumber = sc.nextLine();
-
-        System.out.println("User added successfully");
-
-        Files.write(dataFile, List.of(userName.trim() + "|" + userNumber.trim()), StandardOpenOption.APPEND);
+            System.out.println("1. View Contacts"); //display all
+            System.out.println("2. Add a new contact"); // add new
+            System.out.println("3. Search contact by name"); //search contact
+            System.out.println("4. Delete and existing contact by name");
+            System.out.println("5. Exit");
+            System.out.println();
+            System.out.print("Enter an option: ");
+            int userChoice = sc.nextInt();
+            sc.nextLine(); // clear buffer
 
 
-        // search - finished
-        System.out.print("Enter name to search: ");
+            if (userChoice == 1) {
+                System.out.println("Here's all the contacts in our file:");
 
-        String userSearch = sc.nextLine();
-
-
-
-        if (currentFileInfo.toString().toUpperCase().contains(userSearch.toUpperCase())){
-            for (String e : currentFileInfo){
-                String[] strings = e.split("\\|");
-                if (strings[0].equalsIgnoreCase(userSearch)){
+                for (String e : currentFileInfo) {
+                    String[] strings = e.split("\\|");
                     System.out.printf("%s | %s\n", strings[0], strings[1]);
                 }
-            }
-        } else {
-            System.out.println("Contact does not exist");
-        };
+            } else if (userChoice == 2) {
+                System.out.print("Please enter a name: ");
+                userName = sc.nextLine();
 
-//        System.out.println(currentFileInfo.toString().contains("Jenna"));
+                System.out.print("Enter phone number: ");
+                userNumber = sc.nextLine();
+
+                Files.write(dataFile, List.of(userName.trim() + "|" + userNumber.trim()), StandardOpenOption.APPEND);
+
+                System.out.println("Contact added successfully!");
+            } else if (userChoice == 3) {
+                System.out.print("Enter name to search: ");
+
+                String userSearch = sc.nextLine();
+
+                if (currentFileInfo.toString().toUpperCase().contains(userSearch.toUpperCase())) {
+                    for (String e : currentFileInfo) {
+                        String[] strings = e.split("\\|");
+                        if (strings[0].equalsIgnoreCase(userSearch)) {
+                            System.out.printf("%s | %s\n", strings[0], strings[1]);
+                        }
+                    }
+                } else {
+                    System.out.println("Contact does not exist");
+                }
+            } else if (userChoice == 4) {
+                // if statement to check if user exists
+                // true  - delete
+                //false - alert user (doesn't exist)
+            } else if (userChoice == 5) {
+                System.out.println("Exiting");
+                break;
+            } else {
+                System.out.println("not valid option");
+            }
+
+            System.out.println("Would you like to return to menu? [Y/N]");
+            userContinue = sc.next().equalsIgnoreCase("y");
+
+        } while (userContinue);
 
     }
 }
