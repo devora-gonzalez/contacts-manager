@@ -55,8 +55,8 @@ public class Main {
             if (userChoice == 1) {
 
                 System.out.println("Here's all the contacts in our file:");
-                System.out.printf("%-25s | %-8s | %n", "Name", "Phone Number");
-                System.out.println("------------------------------");
+                System.out.printf("%-20s | %-8s | %n", "Name", "Phone Number");
+                System.out.println("---------------------------------------");
 
                 for (String e : currentFileInfo) {
                     String[] strings = e.split("\\|");
@@ -75,12 +75,38 @@ public class Main {
                 System.out.print("Enter first and last name: ");
                 userName = sc.nextLine();
 
-                System.out.print("Enter phone number: ");
-                userNumber = sc.nextLine();
+                if (currentFileInfo.toString().toUpperCase().contains(userName.toUpperCase())){
+                    System.out.println("This contact already exists, do you want to overwrite it? [Y/N]");
+                    boolean userConfirm = sc.nextLine().equalsIgnoreCase("y");
+//                    sc.nextLine();
+//                    Fix Lance to have first and lastname
+                    if (userConfirm){
+                        System.out.print("Enter phone number: ");
+                        userNumber = sc.nextLine();
+                        for (int i = 0; i < currentFileInfo.size(); i++) {
+                            String currentIndex = currentFileInfo.get(i);
+                            if (currentIndex.toUpperCase().contains(userName.toUpperCase())) {
+                                currentFileInfo.set(i, userName + "|" + userNumber);
+                                Files.write(dataFile, currentFileInfo);
+                            }
+                        }
+                        System.out.println("Contact successfully added!!");
+                    }else {
+                        System.out.println("New contact not added");
+//                        System.out.print("Enter first and last name: ");
+//                        userName = sc.nextLine();
+//
+//                        System.out.print("Enter phone number: ");
+//                        userNumber = sc.nextLine();
+//
+//                        Files.write(dataFile, List.of(userName.trim() + "|" + userNumber.trim()), StandardOpenOption.APPEND);
+                    }
+//                    Files.write(dataFile, List.of(userName.trim() + "|" + userNumber.trim()), StandardOpenOption.APPEND);
 
-                Files.write(dataFile, List.of(userName.trim() + "|" + userNumber.trim()), StandardOpenOption.APPEND);
+//                    System.out.println("Contact successfully added!!");
+                }
 
-                System.out.println("Contact successfully added!!");
+
 
             } else if (userChoice == 3) {
 
