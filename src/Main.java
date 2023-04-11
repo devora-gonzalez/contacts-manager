@@ -51,10 +51,13 @@ public class Main {
 
             if (userChoice == 1) {
                 System.out.println("Here's all the contacts in our file:");
+                System.out.println("Name            | Phone Number");
+                System.out.println("--------------------");
 
                 for (String e : currentFileInfo) {
                     String[] strings = e.split("\\|");
-                    System.out.printf("%s | %s\n", strings[0], strings[1]);
+                    String fmt = "%-15s | %-8s |%n";
+                    System.out.printf(fmt, strings[0], strings[1]);
                 }
             } else if (userChoice == 2) {
                 System.out.print("Please enter a name: ");
