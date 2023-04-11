@@ -25,16 +25,16 @@ public class Main {
 
         List<String> myData = Arrays.asList("Luis|1234567", "Jenna|7654321");
 
-        Files.write(dataFile, myData);
+//        Files.write(dataFile, myData);
 
-        String userName = "Kenneth";
-        String userNumber = "23456789";
+        String userName;
+        String userNumber;
 
-        Files.write(dataFile, (userName+"|"+userNumber).getBytes(), StandardOpenOption.APPEND);
+//        Files.write(dataFile, List.of(userName + "|" + userNumber), StandardOpenOption.APPEND);
 
         System.out.println("Here's all the information in our file");
 
-        List<String> currentFileInfo = Files.readAllLines(dataFile);
+        List<String> currentFileInfo =  Files.readAllLines(dataFile);
 
         for (String e : currentFileInfo){
           String[] strings = e.split("\\|");
@@ -42,12 +42,38 @@ public class Main {
         }
 
         Scanner sc = new Scanner (System.in);
-        System.out.println("Please enter a name");
+
+        // add - finished
+        System.out.print("Please enter a name: ");
         userName = sc.nextLine();
-        System.out.println("Enter phone number");
+
+        System.out.print("Enter phone number: ");
         userNumber = sc.nextLine();
+
         System.out.println("User added successfully");
 
-        Files.write(dataFile, ("\n" + userName.trim() +"|"+ userNumber.trim()).getBytes(), StandardOpenOption.APPEND);
+        Files.write(dataFile, List.of(userName.trim() + "|" + userNumber.trim()), StandardOpenOption.APPEND);
+
+
+        // search - finished
+        System.out.print("Enter name to search: ");
+
+        String userSearch = sc.nextLine();
+
+
+
+        if (currentFileInfo.toString().toUpperCase().contains(userSearch.toUpperCase())){
+            for (String e : currentFileInfo){
+                String[] strings = e.split("\\|");
+                if (strings[0].equalsIgnoreCase(userSearch)){
+                    System.out.printf("%s | %s\n", strings[0], strings[1]);
+                }
+            }
+        } else {
+            System.out.println("Contact does not exist");
+        };
+
+//        System.out.println(currentFileInfo.toString().contains("Jenna"));
+
     }
 }
