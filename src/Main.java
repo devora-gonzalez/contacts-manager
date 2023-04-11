@@ -34,6 +34,15 @@ public class Main {
 
         List<String> currentFileInfo = Files.readAllLines(dataFile);
 
+        System.out.println("Enter a name to delete contact information: ");
+        int userDelete = sc.nextInt();
+//        int userIndex = currentFileInfo.indexOf();
+        System.out.println(currentFileInfo.remove(userDelete));
+//        if (currentFileInfo.toString().toUpperCase().contains(userDelete.toUpperCase())) {
+//            currentFileInfo.indexOf(userDelete);
+//            System.out.println(currentFileInfo.indexOf(userDelete));
+//        }
+
         boolean userContinue;
 
         do {
@@ -51,10 +60,13 @@ public class Main {
 
             if (userChoice == 1) {
                 System.out.println("Here's all the contacts in our file:");
+                System.out.println("Name            | Phone Number");
+                System.out.println("------------------------------");
 
                 for (String e : currentFileInfo) {
                     String[] strings = e.split("\\|");
-                    System.out.printf("%s | %s\n", strings[0], strings[1]);
+                    String fmt = "%-15s | %-8s |%n";
+                    System.out.printf(fmt, strings[0], strings[1]);
                 }
             } else if (userChoice == 2) {
                 System.out.print("Please enter a name: ");
@@ -85,6 +97,11 @@ public class Main {
                 // if statement to check if user exists
                 // true  - delete
                 //false - alert user (doesn't exist)
+//                System.out.println("Enter a name to delete contact information: ");
+//                String userDelete = sc.nextLine();
+//                if (currentFileInfo.toString().toUpperCase().contains(userDelete.toUpperCase())) {
+//                    currentFileInfo.remove(userDelete);
+//                }
             } else if (userChoice == 5) {
                 System.out.println("Exiting");
                 break;
