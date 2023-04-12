@@ -97,6 +97,10 @@ public class Contact {
 
         data.sort(null);
 
+        System.out.println("Here's all the contacts in our file:");
+        System.out.printf("%-20s | %-12s   | %n", "Name", "Phone Number");
+        System.out.println("---------------------------------------");
+
         for (String e : data) {
             String[] strings = e.split("\\|");
             String fmt = "%-20s | %-12s |%n";
