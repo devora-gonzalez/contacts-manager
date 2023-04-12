@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,30 +24,29 @@ public class Main {
             Files.createFile(dataFile);
         }
 
-        List<String> myData = Arrays.asList("Luis|1234567", "Jenna|7654321");
-
-//        Files.write(dataFile, myData);
-
         String userName;
         String userNumber;
 
         List<String> currentFileInfo;
 
 
-        boolean userContinue;
+        boolean userContinue = true;
 
         do {
             currentFileInfo = Files.readAllLines(dataFile);
+            // sorted contacts by alphabetical (lexicographical) order
+            currentFileInfo.sort(null);
 
-            System.out.println("1. View Contacts"); //display all
-            System.out.println("2. Add a new contact"); // add new
-            System.out.println("3. Search contact by name"); //search contact
+            System.out.println("\n1. View Contacts");
+            System.out.println("2. Add a new contact");
+            System.out.println("3. Search contact by name");
             System.out.println("4. Delete and existing contact by name");
             System.out.println("5. Exit");
             System.out.println();
 
             System.out.print("Enter an option: ");
             int userChoice = sc.nextInt();
+            System.out.println();
             sc.nextLine(); // clear buffer
 
 
@@ -89,11 +87,9 @@ public class Main {
                                 Files.write(dataFile, currentFileInfo);
                             }
                         }
-//                        System.out.println("Contact successfully added!");
-                    } else {
+                        System.out.println("Contact successfully updated!");
 
-//                        System.out.print("Enter first and last name: ");
-//                        userName = sc.nextLine();
+                    } else {
 
                         System.out.print("Enter phone number: ");
                         userNumber = sc.nextLine();
@@ -155,15 +151,12 @@ public class Main {
                 }
 
             } else if (userChoice == 5) {
-                System.out.println("Exiting");
-                break;
+                System.out.println("Closing contacts manager");
+                userContinue = false;
 
             } else {
                 System.out.println("not valid option");
             }
-            System.out.println("Would you like to return to menu? [Y/N]");
-            userContinue = sc.next().equalsIgnoreCase("y");
         } while (userContinue);
-
     }
 }
