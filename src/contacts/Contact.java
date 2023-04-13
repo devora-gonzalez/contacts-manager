@@ -23,7 +23,6 @@ public class Contact {
         this.number = number;
     }
 
-
     public String getName() {
         return name;
     }
@@ -41,7 +40,6 @@ public class Contact {
     }
 
     //check if directory/file exists
-
     public void fileCheck() throws IOException {
         String directory = "src/contacts/data";
         String filename = "contacts.txt";
@@ -60,7 +58,6 @@ public class Contact {
     }
 
     // read file
-
     public Path path() {
         return Path.of("src/contacts/data", "contacts.txt");
     }
@@ -69,10 +66,8 @@ public class Contact {
         return Files.readAllLines(this.path());
     }
 
-
     //displayOptions
-
-    public int options(){
+    public int options() {
 
         System.out.println("\n1. View Contacts");
         System.out.println("2. Add a new contact");
@@ -90,7 +85,6 @@ public class Contact {
 
 
     //displayAll
-
     public void displayAll() throws IOException {
         scanner.nextLine();
         List<String> data = this.fileData();
@@ -116,7 +110,6 @@ public class Contact {
     }
 
     //add
-
     public void addContact() throws IOException {
         scanner.nextLine();
 
@@ -147,9 +140,8 @@ public class Contact {
                 this.number = scanner.nextLine();
 
                 Files.write(this.path(), List.of(this.name.trim() + "|" + this.number.trim()), StandardOpenOption.APPEND);
+                System.out.println("Contact successfully added!");
             }
-
-            System.out.println("Contact successfully added!");
         } else {
             System.out.print("Enter phone number: ");
             this.number = scanner.nextLine();
@@ -162,12 +154,10 @@ public class Contact {
 
 
     //search
-
     public void search() throws IOException {
         scanner.nextLine();
 
         List<String> currentFileInfo = this.fileData();
-
 
         System.out.print("Enter name to search: ");
 
@@ -179,7 +169,7 @@ public class Contact {
                 if (currentIndex.toUpperCase().contains(userSearch.toUpperCase())) {
                     String[] strings = currentIndex.split("\\|");
                     String fmt = "%-10s | %-12s |%n";
-                    String formattedNum = strings[1];
+                    String formattedNum;
                     if (strings[1].length() >= 10) {
                         formattedNum = strings[1].replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1)-$2-$3");
                     } else {
@@ -191,11 +181,9 @@ public class Contact {
         } else {
             System.out.println("Contact does not exist.");
         }
-
     }
 
-    //destroy
-
+    //destroy(delete)
     public void destroy() throws IOException {
         scanner.nextLine();
 
@@ -216,6 +204,5 @@ public class Contact {
         } else {
             System.out.println("Contact does not exist.");
         }
-
     }
 }
